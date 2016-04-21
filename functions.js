@@ -3,8 +3,8 @@ var cv = require('opencv')
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
-imageClient = require('google-images');
 var nodeImages = require("images")
+var si = require('./searchImages.js');
 
 var htmlEntities = {
     '&amp;': '&',
@@ -138,13 +138,10 @@ var fn = {
     },
     findImages: function (searching, command) {
         console.log('Searching image for: ', searching);
-        imageClient.search({
-            'for': searching,
-            callback: function(err, images) {
-                console.log('Found ' + images.length + ' images');
-                command(images)
-            }
-        })
+        si.searchImages(searching, function(err, images) {
+            console.log('Found ' + images.length + ' images');
+            command(images)
+        });
     },
     htmlDecode: function(text) {
         return text.replace(/(&\w\w?\w?\w?\w?;|&#[0-9]{1,5};)/ig, function (match, capture) {

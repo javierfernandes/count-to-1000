@@ -2,5 +2,6 @@
 	"apiToken" : "PUT YOURS HERE",
 	"userId" : "ID OF THE USER YOU WANT TO POST ON BEHALF OF",
 	"attachmentBaseUrl" : "BASE URL WHERE THE IMAGES WILL BE UPLOADED",
+	"searchImagesKeys": [],
 	"adminPassword" : "PASSWORD FOR RESET"
 }
