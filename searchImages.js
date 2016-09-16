@@ -1,6 +1,6 @@
 var https = require('https');
 var fs = require('fs');
-var pbotConfig = JSON.parse(fs.readFileSync('./pbot.json', 'utf8'));
+var pbotConfig = JSON.parse(fs.readFileSync(__dirname + '/pbot.json', 'utf8'));
 var keys = pbotConfig.searchImagesKeys;
 var lastKeyIndex = Math.floor(Math.random() * keys.length);
 
@@ -22,7 +22,7 @@ module.exports = {
                 if (body.items) for (var i in body.items) {
                     var item = body.items[i];
                     var title = item.title;
-                    if (item.pagemap.imageobject) for (var j in item.pagemap.imageobject) {
+                    if (item.pagemap && item.pagemap.imageobject) for (var j in item.pagemap.imageobject) {
                         var imageObject = item.pagemap.imageobject[j];
                         if (imageObject.url) {
                             items.push({
@@ -30,6 +30,9 @@ module.exports = {
                                 url: imageObject.url
                             });
                         }
+                    }
+                    if (item.image && item.image.thumbnailLink) {
+                        items.push({ title: title, url: item.image.thumbnailLink })
                     }
                 }
                 then(null, items);

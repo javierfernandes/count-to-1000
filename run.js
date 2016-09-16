@@ -179,7 +179,7 @@ function connectWebSocket(url) {
         var text = message.text
         if ("file_share" === message.subtype) {
             text = message.file.title
-            text += (text.indexOf(":") != -1 ? "+" : ":") + message.file.url_download
+            text += (text.indexOf(":") != -1 ? "+" : ":") + message.file.url_private_download
         }
         // command : param 
         args = /(\w*)\s*\:(.*)/.exec(text)
