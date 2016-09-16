@@ -47,7 +47,7 @@ var deleteMessage = function(timestamp, channelId, then) {
 commands.purgeFiles = {
     private: true,
     help: {
-        description: "borra los archivos subidos no compartidos o con reaction :x:."
+        description: "borra los archivos subidos no compartidos, con reaction :x: o sin reactions."
     },
     execute: function(params, then) {
         var files = [];
@@ -67,7 +67,8 @@ commands.purgeFiles = {
                 var file = files[0];
                 var shared = file.channels.length > 0 || file.groups.length > 0 || file.ims.length > 0;
                 var markedWithReaction = hasReaction(file.reactions, "x");
-                var shouldDelete = !shared || markedWithReaction;
+                var hasReactions = file.reactions && file.reactions.length > 0;
+                var shouldDelete = !shared || markedWithReaction || !hasReactions;
                 if (shouldDelete) {
                     deleteFile(file.id, function () {
                         files = files.slice(1);
